@@ -21,7 +21,7 @@ resource stateStorageAccount 'Microsoft.Storage/storageAccounts@2021-02-01'  exi
   scope: resourceGroup(subscriptionId, resourceGroup().name )
 }
 
-module containerApp '../Container App/generic-containerapp.bicep' = {
+module containerApp '../Container-App/generic-containerapp.bicep' = {
   name: containerAppName
   params: {
     name: containerAppName
