@@ -8,7 +8,7 @@ param skuTier string = 'Free'
 param appName string
 
 
-module staticWebAppModule '../Static Web App/generic-swa.bicep' = {
+module staticWebAppModule '../Static-Web-App/generic-swa.bicep' = {
   name: appName
   params: {
     repositoryUrl:    repositoryUrl

@@ -24,6 +24,7 @@ module storageAccountModule '../Storage/generic-storage.bicep' = {
     KeyVaultName:       keyVaultName
     StorageAccountName: storageAccountName
     sku:                'Standard_GRS'
+    Location:location
   }
 }
 
@@ -31,10 +32,11 @@ module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
   name:'appi-${functionAppName}'
   params:{
     name:'appi-${functionAppName}'
+    rgLocation:location
   }
 }
 
-module aspModule '../App Service Plan/consumption-plan.bicep' = {
+module aspModule '../App-Service-Plan/generic-plan.bicep' = {
   name:'asp-${functionAppName}'
   params:{
     planName:     'asp-${functionAppName}'
@@ -45,7 +47,7 @@ module aspModule '../App Service Plan/consumption-plan.bicep' = {
 module functionAppModule '../function/generic-functionapp.bicep' = {
   name: functionAppName
   params:{
-    Location:        resourceGroup().location
+    Location:        location
     FunctionAppName: functionAppName
     PlanName:        aspModule.outputs.planId
   }

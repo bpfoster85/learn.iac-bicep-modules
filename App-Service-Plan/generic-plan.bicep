@@ -1,7 +1,7 @@
 param planName string
 param planLocation string = resourceGroup().location
-param planSku string ='Y1'
-param planTier string = 'Dynamic'
+param planSku string ='S1'
+param planTier string = 'Standard'
 
 resource asp 'Microsoft.Web/serverfarms@2020-12-01' = {
   name:planName
