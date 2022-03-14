@@ -1,10 +1,11 @@
 param name string
 param location string
+
 module appServicePlanModule '../App-Service-Plan/generic-plan.bicep' = {
   name: 'appServicePlan'
   params: {
     planName:'asp-${name}'
-    planLocation: location
+    
   }
 }
 
@@ -13,6 +14,6 @@ module appServiceModule '../App-Service/generic-app-service.bicep' = {
   params:{
     webSiteName: 'asp-${name}'
     appServicePlanId: appServicePlanModule.outputs.planId
-    location:location
+    
   }
 }
