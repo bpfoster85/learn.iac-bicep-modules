@@ -1,0 +1,40 @@
+name: IAC Container App To Environment
+
+on: 
+    workflow_dispatch:
+        inputs:
+          containerAppEnvName :
+            description: 'Container App Environment Name'     
+            required: true
+            default: 'cae-'
+          containerAppName :
+            description: 'Container App Name'     
+            required: true
+            default: 'ca-'
+          containerImageName :
+            description: 'ACR Repo Image Name'     
+            required: true
+  
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    
+      # Checkout code
+    - uses: actions/checkout@main
+
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_RBAC_DEPLOY }}
+
+      # Deploy Bicep file
+    - name: deploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./Main_Deployments/ContainerApp.bicep
+        parameters: containerAppEnvName=${{ github.event.inputs.containerAppEnvName }} containerAppName=${{ github.event.inputs.containerAppName }} containerImage=${{ github.event.inputs.containerImageName }} subscriptionId=${{secrets.AZURE_SUBSCRIPTION_ID}} 
+        failOnStdErr: false
+

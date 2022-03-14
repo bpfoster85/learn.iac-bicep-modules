@@ -1,0 +1,45 @@
+name: IAC Azure Static Web App
+
+on: 
+    workflow_dispatch:
+        inputs:
+          repositoryUrl:
+            description: 'Repository SWA is associated to'     
+            required: true
+          repositoryBranch:
+            description: 'Repository Branch Name'     
+            required: true
+            default: 'main'
+          appName:
+            description: 'Static App Name'     
+            required: true
+          skuName:
+            description: 'SKU Name'     
+            required: true
+            default: 'Free'
+          skuTier:
+            description: 'SKU Tier'     
+            required: true
+            default: 'Free'
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout code
+    - uses: actions/checkout@main
+
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_RBAC_DEPLOY }}
+
+      # Deploy Bicep file
+    - name: deploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./Main_Deployments/StaticWebApp.bicep
+        parameters: repositoryUrl=${{github.event.inputs.repositoryUrl}} repositoryBranch=${{github.event.inputs.repositoryBranch}} appName=${{github.event.inputs.appName}} skuName=${{github.event.inputs.skuName}} skuTier=${{github.event.inputs.skuTier}}
+        failOnStdErr: false

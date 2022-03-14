@@ -1,0 +1,44 @@
+# This is a basic workflow to help you get started with Actions
+
+name: IAC - Log Analytics
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+     inputs:
+          resourceName:
+            description: 'Log Analytics Name'     
+            required: true
+          location:
+            description: 'LAW Location(match region of ContainerApp)'     
+            required: true
+            default: 'eastus'
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+    steps:
+
+      # Checkout code
+    - uses: actions/checkout@main
+
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_RBAC_DEPLOY }}
+
+      # Deploy Bicep file
+    - name: deploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID  }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./IaC/law.bicep
+        parameters: location=${{github.event.inputs.location}}
+                    name=${{github.event.inputs.resourceName}}
+        failOnStdErr: false
