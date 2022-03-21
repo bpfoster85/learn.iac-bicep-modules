@@ -12,7 +12,7 @@ module appServicePlanModule '../App-Service-Plan/generic-plan.bicep' = {
 module appServiceModule '../App-Service/generic-app-service.bicep' = {
   name:'appService'
   params:{
-    webSiteName: 'asp-${name}'
+    webSiteName: 'as-${name}'
     appServicePlanId: appServicePlanModule.outputs.planId
     
   }
