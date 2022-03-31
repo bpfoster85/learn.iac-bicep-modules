@@ -3,29 +3,10 @@ param FunctionAppName string
 param FunctionStorageAccountConnectionString string
 param AppInsightsKey string
 
-@secure()
-param VideoStorageConnectionString string
-@secure()
-param VideoStorageContainerName string
-@secure()
-param VideoQueueConnectionString string
-@secure()
-param VideoQueueName string
-@secure()
-param CosmosDBKey string
-@secure()
-param CosmosDBEndpointURL string
 
 resource functionAppAppsettings 'Microsoft.Web/sites/config@2018-11-01' = {
   name: '${FunctionAppName}/appsettings'
   properties: {
-    VideoStorageConnectionString: VideoStorageConnectionString
-    VideoStorageContainerName:    VideoStorageContainerName
-    VideoQueueConnectionString:   VideoQueueConnectionString
-    VideoQueueName:               VideoQueueName
-    CosmosDBKey:                  CosmosDBKey
-    CosmosDBEndpointURL:          CosmosDBEndpointURL
-
     
     AzureWebJobsStorage: FunctionStorageAccountConnectionString
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING:        FunctionStorageAccountConnectionString

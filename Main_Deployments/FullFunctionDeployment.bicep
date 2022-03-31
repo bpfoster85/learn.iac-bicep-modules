@@ -63,12 +63,6 @@ module functionAppSettingsModule '../function/generic-function-appsettings.bicep
     FunctionAppName:                        functionAppName
     FunctionStorageAccountConnectionString: kv.getSecret('${storageAccountName}ConnectionString') 
     AppInsightsKey:                         appInsightsModule.outputs.appInsightsKey
-    VideoStorageConnectionString:           kv.getSecret('stvsvideouploadqueueConnectionString') 
-    VideoStorageContainerName:              kv.getSecret('VideoStorageContainerName')   
-    VideoQueueConnectionString:             kv.getSecret('stvsvideouploadqueueConnectionString')
-    VideoQueueName:                         kv.getSecret('VideoQueueName')  
-    CosmosDBKey:                            kv.getSecret('CosmosDBKey')       
-    CosmosDBEndpointURL:                    kv.getSecret('CosmosDBEndpointURL') 
   }  
   dependsOn:[
     functionAppModule
