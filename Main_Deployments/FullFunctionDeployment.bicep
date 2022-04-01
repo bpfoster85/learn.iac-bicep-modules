@@ -1,6 +1,8 @@
 param FunctionAppName string
 param KeyVaultName string
+param KeyVaultRGName string
 param SubscriptionId string
+
 
 @minLength(3)
 @maxLength(24)
@@ -15,7 +17,7 @@ var storageAccountName = toLower(StorageAccountName)
 
 resource kv 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   name: keyVaultName
-  scope: resourceGroup(subscriptionId, resourceGroup().name )
+  scope: resourceGroup(subscriptionId, KeyVaultRGName )
 }
 
 module storageAccountModule '../Storage/generic-storage.bicep' = {
