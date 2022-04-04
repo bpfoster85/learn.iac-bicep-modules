@@ -1,8 +1,10 @@
 param FunctionAppName string
 param KeyVaultName string
+param KeyVaultRGName string
 param SubscriptionId string
 param Location string
 param KeyVaultRGName string
+
 
 @minLength(3)
 @maxLength(24)
