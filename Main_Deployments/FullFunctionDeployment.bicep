@@ -1,12 +1,14 @@
 param FunctionAppName string
 param KeyVaultName string
 param SubscriptionId string
+param Location string
+param KeyVaultRGName string
 
 @minLength(3)
 @maxLength(24)
 @description('The name of the storage account')
 param StorageAccountName string = 'tbd'
-param location string = resourceGroup().location
+
 
 var functionAppName = toLower(FunctionAppName)
 var keyVaultName = KeyVaultName
@@ -15,7 +17,7 @@ var storageAccountName = toLower(StorageAccountName)
 
 resource kv 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   name: keyVaultName
-  scope: resourceGroup(subscriptionId, resourceGroup().name )
+  scope: resourceGroup(subscriptionId, KeyVaultRGName )
 }
 
 module storageAccountModule '../Storage/generic-storage.bicep' = {

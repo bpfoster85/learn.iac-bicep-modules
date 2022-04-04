@@ -11,6 +11,13 @@ on:
             description: 'Function Name'     
             required: true
             default: 'fn-'
+          choice:
+            type: choice
+            description: Make a choice
+            options:
+            - westus2
+            - westus2
+            
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -26,10 +33,10 @@ jobs:
 
       # Deploy Bicep file
     - name: deploy
-      uses: azure/arm-deploy@v1
+      uses: azure/arm-deploy@v1      
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./Main_Deployments/FullFunctionDeployment.bicep
-        parameters: StorageAccountName=${{github.event.inputs.storageAccountName}} FunctionAppName=${{github.event.inputs.functionAppName}} SubscriptionId=${{ secrets.AZURE_SUBSCRIPTION}} KeyVaultName=${{ secrets.AZURE_KEYVAULT_NAME}}
+        parameters: Location=${{github.event.inputs.resourceLocation}} StorageAccountName=${{github.event.inputs.storageAccountName}} FunctionAppName=${{github.event.inputs.functionAppName}} SubscriptionId=${{ secrets.AZURE_SUBSCRIPTION}} KeyVaultName=${{ secrets.AZURE_KEYVAULT_NAME}} KeyVaultRGName=${{ secrets.AZURE_KEYVAULT_RG_NAME}}
         failOnStdErr: false
