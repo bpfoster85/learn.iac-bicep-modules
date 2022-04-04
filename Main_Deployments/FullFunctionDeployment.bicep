@@ -1,6 +1,5 @@
 param FunctionAppName string
 param KeyVaultName string
-param KeyVaultRGName string
 param SubscriptionId string
 param Location string
 param KeyVaultRGName string
@@ -28,7 +27,7 @@ module storageAccountModule '../Storage/generic-storage.bicep' = {
     KeyVaultName:       keyVaultName
     StorageAccountName: storageAccountName
     sku:                'Standard_GRS'
-    Location:location
+    Location:Location
   }
 }
 
@@ -36,7 +35,7 @@ module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
   name:'appi-${functionAppName}'
   params:{
     name:'appi-${functionAppName}'
-    rgLocation:location
+    rgLocation:Location
   }
 }
 
@@ -44,14 +43,14 @@ module aspModule '../App-Service-Plan/generic-plan.bicep' = {
   name:'asp-${functionAppName}'
   params:{
     planName:     'asp-${functionAppName}'
-    planLocation: location
+    planLocation: Location
   }
 }
 
 module functionAppModule '../function/generic-functionapp.bicep' = {
   name: functionAppName
   params:{
-    Location:        location
+    Location:        Location
     FunctionAppName: functionAppName
     PlanName:        aspModule.outputs.planId
   }
