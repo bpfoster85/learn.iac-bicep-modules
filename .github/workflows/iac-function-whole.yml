@@ -11,7 +11,7 @@ on:
             description: 'Function Name'     
             required: true
             default: 'fn-'
-          choice:
+          resourceLocation:
             type: choice
             description: Make a choice
             options:
