@@ -29,6 +29,9 @@ module storageAccountModule '../Storage/generic-storage.bicep' = {
     sku:                'Standard_GRS'
     Location:Location
   }
+  dependsOn:[
+   kv
+  ]
 }
 
 module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
@@ -43,7 +46,7 @@ module aspModule '../App-Service-Plan/generic-plan.bicep' = {
   name:'asp-${functionAppName}'
   params:{
     planName:     'asp-${functionAppName}'
-    planLocation: Location
+    Location: Location
   }
 }
 

@@ -1,5 +1,5 @@
 param name string
-param rgLocation string = resourceGroup().location
+param rgLocation string
 
 resource appIns 'Microsoft.Insights/components@2020-02-02-preview' = {
   name:name

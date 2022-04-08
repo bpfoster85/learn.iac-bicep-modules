@@ -1,4 +1,4 @@
-param Location string = resourceGroup().location
+param Location string
 param FunctionAppName string
 param PlanName string
 

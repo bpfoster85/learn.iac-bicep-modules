@@ -1,6 +1,6 @@
 param StorageAccountName string
 param sku string
-param Location string = resourceGroup().location
+param Location string 
 param Kind string = 'StorageV2'
 param KeyVaultName string 
 

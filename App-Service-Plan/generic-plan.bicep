@@ -1,11 +1,11 @@
 param planName string
-param planLocation string = resourceGroup().location
+param Location string
 param planSku string ='S1'
 param planTier string = 'Standard'
 
 resource asp 'Microsoft.Web/serverfarms@2020-12-01' = {
   name:planName
-  location:planLocation
+  location: Location
   sku:{
     name:planSku
     tier:planTier
