@@ -21,18 +21,18 @@ resource kv 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   scope: resourceGroup(subscriptionId, KeyVaultRGName )
 }
 
-module storageAccountModule '../Storage/generic-storage.bicep' = {
-  name: storageAccountName
-  params: {
-    KeyVaultName:       keyVaultName
-    StorageAccountName: storageAccountName
-    sku:                'Standard_GRS'
-    Location:Location
-  }
-  dependsOn:[
-   kv
-  ]
-}
+//module storageAccountModule '../Storage/generic-storage.bicep' = {
+//  name: storageAccountName
+//  params: {
+//    KeyVaultName:       keyVaultName
+//    StorageAccountName: storageAccountName
+//    sku:                'Standard_GRS'
+//    Location:Location
+//  }
+//  dependsOn:[
+//   kv
+//  ]
+//}
 
 //module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
 //  name:'appi-${functionAppName}'
