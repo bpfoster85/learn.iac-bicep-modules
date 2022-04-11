@@ -23,8 +23,7 @@ resource kv 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
 
 module storageAccountModule '../Storage/generic-storage.bicep' = {
   name: storageAccountName
-  params: {
-    KeyVaultName:       keyVaultName
+  params: {    
     StorageAccountName: storageAccountName
     sku:                'Standard_GRS'
     Location:Location
@@ -32,6 +31,17 @@ module storageAccountModule '../Storage/generic-storage.bicep' = {
   }
   dependsOn:[
    kv
+  ]
+}
+
+// ========== add-secret-to-existing-kv ==========
+resource secret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
+  name: '${KeyVaultName}/${StorageAccountName}ConnectionString'  
+  properties: {
+    value: storageAccountModule.outputs.storageConnectionString
+  }
+  dependsOn:[
+    storageAccountModule
   ]
 }
 
