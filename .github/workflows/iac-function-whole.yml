@@ -12,11 +12,10 @@ on:
             required: true
             default: 'fn-'
           resourceLocation:
-            type: choice
-            description: Pick a location
-            options:
-            - westus2
-            - westus2
+            description: 'location'     
+            required: true
+            default: 'westus2'
+            
             
 jobs:
   build-and-deploy:
