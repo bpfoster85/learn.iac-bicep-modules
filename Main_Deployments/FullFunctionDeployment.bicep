@@ -28,29 +28,30 @@ module storageAccountModule '../Storage/generic-storage.bicep' = {
     StorageAccountName: storageAccountName
     sku:                'Standard_GRS'
     Location:Location
+    RGName: resourceGroup().name
   }
   dependsOn:[
    kv
   ]
 }
 
-//module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
+module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
   name:'appi-${functionAppName}'
   params:{
     name:'appi-${functionAppName}'
     rgLocation:Location
   }
-//}
-//
-//module aspModule '../App-Service-Plan/generic-plan.bicep' = {
+}
+
+module aspModule '../App-Service-Plan/generic-plan.bicep' = {
   name:'asp-${functionAppName}'
   params:{
     planName:     'asp-${functionAppName}'
     Location: Location
   }
-//}
-//
-//module functionAppModule '../function/generic-functionapp.bicep' = {
+}
+
+module functionAppModule '../function/generic-functionapp.bicep' = {
   name: functionAppName
   params:{
     Location:        Location
@@ -61,9 +62,9 @@ module storageAccountModule '../Storage/generic-storage.bicep' = {
     storageAccountModule
     aspModule
   ] 
-//}
-//
-//module functionAppSettingsModule '../function/generic-function-appsettings.bicep' = {
+}
+
+module functionAppSettingsModule '../function/generic-function-appsettings.bicep' = {
   name: 'functionAppSettings-${functionAppName}'
   params: {
     FunctionAppName:                        functionAppName
@@ -74,5 +75,5 @@ module storageAccountModule '../Storage/generic-storage.bicep' = {
     functionAppModule
     appInsightsModule
   ]
-//}
+}
 
