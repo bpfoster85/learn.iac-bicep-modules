@@ -21,58 +21,58 @@ resource kv 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   scope: resourceGroup(subscriptionId, KeyVaultRGName )
 }
 
-//module storageAccountModule '../Storage/generic-storage.bicep' = {
-//  name: storageAccountName
-//  params: {
-//    KeyVaultName:       keyVaultName
-//    StorageAccountName: storageAccountName
-//    sku:                'Standard_GRS'
-//    Location:Location
-//  }
-//  dependsOn:[
-//   kv
-//  ]
-//}
+module storageAccountModule '../Storage/generic-storage.bicep' = {
+  name: storageAccountName
+  params: {
+    KeyVaultName:       keyVaultName
+    StorageAccountName: storageAccountName
+    sku:                'Standard_GRS'
+    Location:Location
+  }
+  dependsOn:[
+   kv
+  ]
+}
 
-//module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
-//  name:'appi-${functionAppName}'
-//  params:{
-//    name:'appi-${functionAppName}'
-//    rgLocation:Location
-//  }
-//}
-//
-//module aspModule '../App-Service-Plan/generic-plan.bicep' = {
-//  name:'asp-${functionAppName}'
-//  params:{
-//    planName:     'asp-${functionAppName}'
-//    Location: Location
-//  }
-//}
-//
-//module functionAppModule '../function/generic-functionapp.bicep' = {
-//  name: functionAppName
-//  params:{
-//    Location:        Location
-//    FunctionAppName: functionAppName
-//    PlanName:        aspModule.outputs.planId
-//  }
-//  dependsOn:[
-//    storageAccountModule
-//    aspModule
-//  ] 
-//}
-//
-//module functionAppSettingsModule '../function/generic-function-appsettings.bicep' = {
-//  name: 'functionAppSettings-${functionAppName}'
-//  params: {
-//    FunctionAppName:                        functionAppName
-//    FunctionStorageAccountConnectionString: kv.getSecret('${storageAccountName}ConnectionString') 
-//    AppInsightsKey:                         appInsightsModule.outputs.appInsightsKey
-//  }  
-//  dependsOn:[
-//    functionAppModule
-//    appInsightsModule
-//  ]
-//}
+module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
+  name:'appi-${functionAppName}'
+  params:{
+    name:'appi-${functionAppName}'
+    rgLocation:Location
+  }
+}
+
+module aspModule '../App-Service-Plan/generic-plan.bicep' = {
+  name:'asp-${functionAppName}'
+  params:{
+    planName:     'asp-${functionAppName}'
+    Location: Location
+  }
+}
+
+module functionAppModule '../function/generic-functionapp.bicep' = {
+  name: functionAppName
+  params:{
+    Location:        Location
+    FunctionAppName: functionAppName
+    PlanName:        aspModule.outputs.planId
+  }
+  dependsOn:[
+    storageAccountModule
+    aspModule
+  ] 
+}
+
+module functionAppSettingsModule '../function/generic-function-appsettings.bicep' = {
+  name: 'functionAppSettings-${functionAppName}'
+  params: {
+    FunctionAppName:                        functionAppName
+    FunctionStorageAccountConnectionString: kv.getSecret('${storageAccountName}ConnectionString') 
+    AppInsightsKey:                         appInsightsModule.outputs.appInsightsKey
+  }  
+  dependsOn:[
+    functionAppModule
+    appInsightsModule
+  ]
+}
 
