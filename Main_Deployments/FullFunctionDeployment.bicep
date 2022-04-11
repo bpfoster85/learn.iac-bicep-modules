@@ -34,45 +34,45 @@ module storageAccountModule '../Storage/generic-storage.bicep' = {
   ]
 }
 
-module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
-  name:'appi-${functionAppName}'
-  params:{
-    name:'appi-${functionAppName}'
-    rgLocation:Location
-  }
-}
-
-module aspModule '../App-Service-Plan/generic-plan.bicep' = {
-  name:'asp-${functionAppName}'
-  params:{
-    planName:     'asp-${functionAppName}'
-    Location: Location
-  }
-}
-
-module functionAppModule '../function/generic-functionapp.bicep' = {
-  name: functionAppName
-  params:{
-    Location:        Location
-    FunctionAppName: functionAppName
-    PlanName:        aspModule.outputs.planId
-  }
-  dependsOn:[
-    storageAccountModule
-    aspModule
-  ] 
-}
-
-module functionAppSettingsModule '../function/generic-function-appsettings.bicep' = {
-  name: 'functionAppSettings-${functionAppName}'
-  params: {
-    FunctionAppName:                        functionAppName
-    FunctionStorageAccountConnectionString: kv.getSecret('${storageAccountName}ConnectionString') 
-    AppInsightsKey:                         appInsightsModule.outputs.appInsightsKey
-  }  
-  dependsOn:[
-    functionAppModule
-    appInsightsModule
-  ]
-}
+//module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
+//  name:'appi-${functionAppName}'
+//  params:{
+//    name:'appi-${functionAppName}'
+//    rgLocation:Location
+//  }
+//}
+//
+//module aspModule '../App-Service-Plan/generic-plan.bicep' = {
+//  name:'asp-${functionAppName}'
+//  params:{
+//    planName:     'asp-${functionAppName}'
+//    Location: Location
+//  }
+//}
+//
+//module functionAppModule '../function/generic-functionapp.bicep' = {
+//  name: functionAppName
+//  params:{
+//    Location:        Location
+//    FunctionAppName: functionAppName
+//    PlanName:        aspModule.outputs.planId
+//  }
+//  dependsOn:[
+//    storageAccountModule
+//    aspModule
+//  ] 
+//}
+//
+//module functionAppSettingsModule '../function/generic-function-appsettings.bicep' = {
+//  name: 'functionAppSettings-${functionAppName}'
+//  params: {
+//    FunctionAppName:                        functionAppName
+//    FunctionStorageAccountConnectionString: kv.getSecret('${storageAccountName}ConnectionString') 
+//    AppInsightsKey:                         appInsightsModule.outputs.appInsightsKey
+//  }  
+//  dependsOn:[
+//    functionAppModule
+//    appInsightsModule
+//  ]
+//}
 
