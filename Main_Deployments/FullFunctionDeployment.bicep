@@ -46,7 +46,7 @@ module appInsightsModule '../Application Insights/generic-appinsights.bicep' = {
 module aspModule '../App-Service-Plan/generic-plan.bicep' = {
   name:'asp-${functionAppName}'
   params:{
-    planName:     'asp-${functionAppName}'
+    planName: 'asp-${functionAppName}'
     Location: Location
   }
 }
