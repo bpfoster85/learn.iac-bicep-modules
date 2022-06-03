@@ -30,5 +30,6 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./Main_Deployments/AzureComputeGallery.bicep
-         parameters: acgName=${{github.event.inputs.acrName}} location='westus3' allowSoftDelete=false
+        parameters: acgName=${{github.event.inputs.acrName}} location='westus3' allowSoftDelete=false
+
 

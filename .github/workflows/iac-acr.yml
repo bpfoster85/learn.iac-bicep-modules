@@ -3,12 +3,6 @@
 name: IAC - Azure Container Registry
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
   workflow_dispatch:
     inputs:
         acrName:
@@ -35,5 +29,5 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./IaC/acr.bicep
-         parameters: acrName=${{github.event.inputs.acrName}}
+        parameters: acrName=${{github.event.inputs.acrName}}
         failOnStdErr: false
