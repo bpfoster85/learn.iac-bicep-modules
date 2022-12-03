@@ -15,6 +15,7 @@ var functionAppName = toLower(FunctionAppName)
 var keyVaultName = KeyVaultName
 var subscriptionId = SubscriptionId
 var storageAccountName = toLower(StorageAccountName)
+var kvSecretName = 'toLower(StorageAccountName)ConnectionString'
 
 resource kv 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   name: keyVaultName
@@ -36,7 +37,7 @@ module storageAccountModule '../Storage/generic-storage.bicep' = {
 
 // ========== add-secret-to-existing-kv ==========
 resource secret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
-  name: '${KeyVaultName}/${StorageAccountName}ConnectionString'  
+  name: '${KeyVaultName}/${kvSecretName}'  
   properties: {
     value: storageAccountModule.outputs.storageConnectionString
   }
@@ -78,7 +79,7 @@ module functionAppSettingsModule '../function/generic-function-appsettings.bicep
   name: 'functionAppSettings-${functionAppName}'
   params: {
     FunctionAppName:                        functionAppName
-    FunctionStorageAccountConnectionString: kv.getSecret('${storageAccountName}ConnectionString') 
+    FunctionStorageAccountConnectionString: kv.getSecret(kvSecretName) 
     AppInsightsKey:                         appInsightsModule.outputs.appInsightsKey
   }  
   dependsOn:[
