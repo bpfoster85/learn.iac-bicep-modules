@@ -78,7 +78,7 @@ module functionAppSettingsModule '../function/generic-function-appsettings.bicep
   name: 'functionAppSettings-${functionAppName}'
   params: {
     FunctionAppName:                        functionAppName
-    FunctionStorageAccountConnectionString: 'kv.getSecret('${storageAccountName}ConnectionString') 
+    FunctionStorageAccountConnectionString: kv.getSecret('${storageAccountName}ConnectionString') 
     AppInsightsKey:                         appInsightsModule.outputs.appInsightsKey
   }  
   dependsOn:[
