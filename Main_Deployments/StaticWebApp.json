@@ -1,0 +1,129 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.1124.51302",
+      "templateHash": "8123084312933319179"
+    }
+  },
+  "parameters": {
+    "repositoryUrl": {
+      "type": "string"
+    },
+    "repositoryBranch": {
+      "type": "string",
+      "defaultValue": "main"
+    },
+    "location": {
+      "type": "string"
+      
+    },
+    "skuName": {
+      "type": "string",
+      "defaultValue": "Free"
+    },
+    "skuTier": {
+      "type": "string",
+      "defaultValue": "Free"
+    },
+    "appName": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[parameters('appName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "repositoryUrl": {
+            "value": "[parameters('repositoryUrl')]"
+          },
+          "repositoryBranch": {
+            "value": "[parameters('repositoryBranch')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "skuName": {
+            "value": "[parameters('skuName')]"
+          },
+          "skuTier": {
+            "value": "[parameters('skuTier')]"
+          },
+          "appName": {
+            "value": "[parameters('appName')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1124.51302",
+              "templateHash": "17564721329454831894"
+            }
+          },
+          "parameters": {
+            "repositoryUrl": {
+              "type": "string"
+            },
+            "repositoryBranch": {
+              "type": "string",
+              "defaultValue": "main"
+            },
+            "location": {
+              "type": "string",
+              "value": "[parameters('location')]"
+            },
+            "skuName": {
+              "type": "string",
+              "defaultValue": "Free"
+            },
+            "skuTier": {
+              "type": "string",
+              "defaultValue": "Free"
+            },
+            "appName": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/staticSites",
+              "apiVersion": "2020-12-01",
+              "name": "[parameters('appName')]",
+              "location": "[parameters('location')]",
+              "sku": {
+                "name": "[parameters('skuName')]",
+                "tier": "[parameters('skuTier')]"
+              },
+              "properties": {
+                "provider": "DevOps",
+                "repositoryUrl": "[parameters('repositoryUrl')]",
+                "branch": "[parameters('repositoryBranch')]",
+                "buildProperties": {
+                  "skipGithubActionWorkflowGeneration": true
+                }
+              }
+            }
+          ],
+          "outputs": {
+            "deployment_token": {
+              "type": "string",
+              "value": "[listSecrets(resourceId('Microsoft.Web/staticSites', parameters('appName')), '2020-12-01').properties.apiKey]"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
