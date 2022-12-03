@@ -15,7 +15,7 @@ var functionAppName = toLower(FunctionAppName)
 var keyVaultName = KeyVaultName
 var subscriptionId = SubscriptionId
 var storageAccountName = toLower(StorageAccountName)
-var kvSecretName = 'toLower(StorageAccountName)ConnectionString'
+var kvSecretName = toLower('${StorageAccountName}connstr')
 
 resource kv 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   name: keyVaultName
