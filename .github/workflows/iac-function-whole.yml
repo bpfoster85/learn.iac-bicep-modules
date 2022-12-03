@@ -35,7 +35,7 @@ jobs:
       uses: azure/arm-deploy@v1      
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: 'rg-websocket-apim' #${{ secrets.AZURE_RG }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./Main_Deployments/FullFunctionDeployment.bicep
         parameters: Location=${{github.event.inputs.resourceLocation}} StorageAccountName=${{github.event.inputs.storageAccountName}} FunctionAppName=${{github.event.inputs.functionAppName}} SubscriptionId=${{ secrets.AZURE_SUBSCRIPTION}} KeyVaultName=${{ secrets.AZURE_KEYVAULT_NAME}} KeyVaultRGName=${{ secrets.AZURE_KEYVAULT_RG_NAME}}
         failOnStdErr: false
