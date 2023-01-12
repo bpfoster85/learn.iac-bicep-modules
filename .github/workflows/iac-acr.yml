@@ -8,6 +8,9 @@ on:
         acrName:
           description: 'Registry Name'     
           required: true
+        RGName:
+          description: 'Resource Group'     
+          required: true
         
 jobs:
   build-and-deploy:
@@ -27,7 +30,7 @@ jobs:
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: ${{ secrets.AZURE_RG }}
+        resourceGroupName: ${{ github.event.inputs.RGName }}
         template: ./IaC/acr.bicep
         parameters: acrName=${{github.event.inputs.acrName}}
         failOnStdErr: false
